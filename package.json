@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "ws": "^8.13.0"
+  },
+  "name": "raidboss",
+  "version": "1.0.0",
+  "main": "server/server.js",
+  "devDependencies": {},
+  "author": "maxstc",
+  "license": "ISC",
+  "description": ""
+}
