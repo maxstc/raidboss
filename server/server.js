@@ -1,5 +1,6 @@
 let port = 41399;
 
+//Can pass port as first argument (or leave empty for default value)
 if (process.argv.length > 2) {
     port = parseInt(process.argv[2]);
 }
@@ -10,8 +11,10 @@ const fs = require("fs");
 
 ////////// HTTP SERVER //////////
 
+//To store data of static files to be served
 const fileMap = new Map();
 
+//Read in all files in the client/ directory
 let files = fs.readdirSync("client/");
 for (let i = 0; i < files.length; i++) {
     fs.readFile("client/" + files[i], (err, data) => {
@@ -35,6 +38,7 @@ for (let i = 0; i < files.length; i++) {
     })
 }
 
+//HTTP static server
 const httpServer = http.createServer((req, res) => {
     if (req.url === "/") {
         req.url = "index.html";
@@ -60,6 +64,7 @@ const wsServer = new ws.WebSocketServer({ server: httpServer });
 
 let websockets = [];
 
+//Websocket server
 wsServer.on("connection", (websocket) => {
     let id = websockets.length;
     websockets.push(websocket);
@@ -76,4 +81,5 @@ wsServer.on("connection", (websocket) => {
     });
 });
 
+//Start the HTTP server (and websocket server)
 httpServer.listen(port);
