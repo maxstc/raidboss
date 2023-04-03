@@ -15,33 +15,49 @@ const fs = require("fs");
 const fileMap = new Map();
 
 //Read in all files in the client/ directory
-let files = fs.readdirSync("client/");
-for (let i = 0; i < files.length; i++) {
-    fs.readFile("client/" + files[i], (err, data) => {
-        if (!err) {
-            let extension = files[i].substring(files[i].lastIndexOf("."));
-            let contentType = 0;
-            if (extension === ".js") {
-                contentType = "application/javascript";
-            }
-            else if (extension === ".html") {
-                contentType = "text/html";
-            }
-            else if (extension === ".css") {
-                contentType = "text/css";
-            }
-            else {
-                contentType = "text/plain";
-            }
-            fileMap.set(files[i], [data, contentType]);
+readFolderRecurse("client/");
+
+function readFolderRecurse(path) {
+    let files = fs.readdirSync(path);
+    for (let i = 0; i < files.length; i++) {
+        let currentPath = path + files[i];
+        if (fs.statSync(currentPath).isDirectory()) {
+            readFolderRecurse(currentPath + "/");
         }
-    })
+        else {
+            fs.readFile(currentPath, (err, data) => {
+                if (!err) {
+                    fileMap.set(currentPath, [data, mime(files[i])]);
+                }
+                else {
+                    console.log("Error reading file: " + currentPath);
+                }
+            });
+        }
+    }
+}
+
+function mime(fileName) {
+    let extension = fileName.substring(fileName.lastIndexOf("."));
+    if (extension === ".js") {
+        return "application/javascript";
+    }
+    else if (extension === ".html") {
+        return "text/html";
+    }
+    else if (extension === ".css") {
+        return "text/css";
+    }
+    else if (extension === ".png") {
+        return "image/png";
+    }
+    return "text/plain";
 }
 
 //HTTP static server
 const httpServer = http.createServer((req, res) => {
     if (req.url === "/") {
-        req.url = "index.html";
+        req.url = "client/index.html";
     }
     else if (req.url.charAt(0) === "/") {
         req.url = req.url.substring(1);
