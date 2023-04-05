@@ -11,7 +11,7 @@ let camY = 0;
 let midX = 0;
 let midY = 0;
 
-let sprites = [];
+let obs = [];
 
 function resizeCanvas() {
     canvas.setAttribute("width", window.innerWidth);
@@ -27,8 +27,8 @@ window.onload = () => {
 
     myimage = new Image();
     myimage.onload = () => {
-        sprites.push({name: "monster", x: 100, y: 100, width: 200, height: 200, image: myimage, halfWidth: 100, halfHeight: 100, halfImageWidth: myimage.width / 2, halfImageHeight: myimage.height / 2});
-        sprites.push({name: "invis", x: 200, y: 200, width: 50, height: 50, image: null, halfWidth: 25, halfHeight: 25});
+        obs.push({name: "monster", x: 100, y: 100, width: 200, height: 200, image: myimage, halfWidth: 100, halfHeight: 100, halfImageWidth: myimage.width / 2, halfImageHeight: myimage.height / 2});
+        obs.push({name: "invis", x: 200, y: 200, width: 50, height: 50, image: null, halfWidth: 25, halfHeight: 25});
     }
     myimage.src = "client/images/monster.png";
 }
@@ -40,32 +40,32 @@ window.onresize = () => {
 setInterval(render, 50);
 
 function render() {
-    for (let i = 0; i < sprites.length; i++) {
-        let s = sprites[i];
+    for (let i = 0; i < obs.length; i++) {
+        let o = obs[i];
         ctx.fillStyle = "black";
         ctx.font = "20px Courier New";
-        ctx.fillText(s.name, s.x + midX - s.halfWidth, s.y + midY - s.halfHeight - 2);
-        if (s.image != null) {
+        ctx.fillText(o.name, o.x + midX - o.halfWidth, o.y + midY - o.halfHeight - 2);
+        if (o.image != null) {
             ctx.drawImage(
-                s.image, 
-                s.x - camX + midX - s.halfImageWidth,
-                s.y - camY + midY - s.halfImageHeight,
-                s.image.width,
-                s.image.height
+                o.image, 
+                o.x - camX + midX - o.halfImageWidth,
+                o.y - camY + midY - o.halfImageHeight,
+                o.image.width,
+                o.image.height
             );
         }
         //todo put this if outside the for?
         if (debug) {
-            if (s.image === null) {
+            if (o.image === null) {
                 ctx.strokeStyle = DEBUG_IMAGE_RECT_COLOR;
-                ctx.strokeRect(s.x - 10 + midX, s.y - 10 + midY, 20, 20);
+                ctx.strokeRect(o.x - 10 + midX, o.y - 10 + midY, 20, 20);
             }
             else { 
                 ctx.strokeStyle = DEBUG_IMAGE_RECT_COLOR;
-                ctx.strokeRect(s.x - s.halfImageWidth + midX, s.y - s.halfImageHeight + midY, s.image.width, s.image.height);
+                ctx.strokeRect(o.x - o.halfImageWidth + midX, o.y - o.halfImageHeight + midY, o.image.width, o.image.height);
             }
             ctx.strokeStyle = DEBUG_COLLISION_RECT_COLOR;
-            ctx.strokeRect(s.x - s.halfWidth + midX, s.y - s.halfHeight + midY, s.width, s.height);
+            ctx.strokeRect(o.x - o.halfWidth + midX, o.y - o.halfHeight + midY, o.width, o.height);
         }
     }
 }
