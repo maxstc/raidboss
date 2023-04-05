@@ -1,10 +1,12 @@
 const DEBUG_IMAGE_RECT_COLOR = "green";
 const DEBUG_COLLISION_RECT_COLOR = "red";
 
+let debug = true;
+
 let canvas;
 let ctx;
-let camX;
-let camY;
+let camX = 0;
+let camY = 0;
 
 let midX = 0;
 let midY = 0;
@@ -25,8 +27,7 @@ window.onload = () => {
 
     myimage = new Image();
     myimage.onload = () => {
-        ctx.imageSmoothingEnabled = false;
-        ctx.drawImage(myimage, 100, 100, myimage.width*8, myimage.height*8);
+        sprites.push({x: 100, y: 100, width: 200, height: 200, image: myimage, halfWidth: 100, halfHeight: 100, halfImageWidth: myimage.width / 2, halfImageHeight: myimage.height / 2});
     }
     myimage.src = "client/images/monster.png";
 }
@@ -35,27 +36,30 @@ window.onresize = () => {
     resizeCanvas();
 }
 
+setInterval(render, 50);
+
 function render() {
     for (let i = 0; i < sprites.length; i++) {
         let s = sprites[i];
         ctx.drawImage(
             s.image, 
-            s.x - camX + midX - s.halfWidth,
-            s.y - camY + midY - s.halfHeight,
-            s.width,
-            s.height
+            s.x - camX + midX - s.halfImageWidth,
+            s.y - camY + midY - s.halfImageHeight,
+            s.image.width,
+            s.image.height
         );
         //todo put this if outside the for?
         if (debug) {
             if (s.image === null) {
-
+                console.log("tell max to put a circle here");
             }
             else { 
                 ctx.strokeStyle = DEBUG_IMAGE_RECT_COLOR;
-                ctx.strokeRect(s.x - (s.image.width / 2), s.y - (s.image.height / 2), s.image.width, s.image.height);
+                console.log(s.image.width);
+                ctx.strokeRect(s.x - s.halfImageWidth + midX, s.y - s.halfImageHeight + midY, s.image.width, s.image.height);
             }
             ctx.strokeStyle = DEBUG_COLLISION_RECT_COLOR;
-            ctx.strokeRect(s.x - s.halfWidth, s.y - s.halfHeight, s.width, s.height);
+            ctx.strokeRect(s.x - s.halfWidth + midX, s.y - s.halfHeight + midY, s.width, s.height);
         }
     }
 }
