@@ -11,7 +11,9 @@ let camY = 0;
 let midX = 0;
 let midY = 0;
 
+let focusedOb = null;
 let obs = [];
+let socket;
 
 function resizeCanvas() {
     canvas.setAttribute("width", window.innerWidth);
@@ -31,6 +33,8 @@ window.onload = () => {
         obs.push({name: "invis", x: 200, y: 200, width: 50, height: 50, image: null, halfWidth: 25, halfHeight: 25});
     }
     myimage.src = "client/images/monster.png";
+
+    socket = new WebSocket("ws://" + window.location.host);
 }
 
 window.onresize = () => {
