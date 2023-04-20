@@ -97,5 +97,9 @@ wsServer.on("connection", (websocket) => {
     });
 });
 
+////////// GAME LOGIC //////////
+
+let obs = [];
+
 //Start the HTTP server (and websocket server)
 httpServer.listen(port);

@@ -1,4 +1,5 @@
 const DEBUG_IMAGE_RECT_COLOR = "green";
+const DEBUG_NO_IMAGE_RECT_COLOR = "gray";
 const DEBUG_COLLISION_RECT_COLOR = "red";
 
 let debug = true;
@@ -61,7 +62,7 @@ function render() {
         //todo put this if outside the for?
         if (debug) {
             if (o.image === null) {
-                ctx.strokeStyle = DEBUG_IMAGE_RECT_COLOR;
+                ctx.strokeStyle = DEBUG_NO_IMAGE_RECT_COLOR;
                 ctx.strokeRect(o.x - 10 + midX, o.y - 10 + midY, 20, 20);
             }
             else { 
