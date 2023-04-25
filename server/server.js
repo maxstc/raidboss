@@ -101,5 +101,45 @@ wsServer.on("connection", (websocket) => {
 
 let obs = [];
 
+function gameTick() {
+    //Do ai
+    aiTick();
+    //Move obs
+    moveTick();
+    //Handle ob collision
+    collisionTick();
+    //Send data to players
+    sendObData();
+}
+
+function aiTick() {
+    for (let i = 0; i < obs.length; i++) {
+        obs[i].aiFunc(obs[i]);
+    }
+}
+
+function moveTick() {
+    for (let i = 0; i < obs.length; i++) {
+        obs[i].x += obs[i].dx;
+        obs[i].y += obs[i].dy;
+    }
+}
+
+function collisionTick() {
+    for (let i = 0; i < obs.length; i++) {
+        for (let j = i + 1; j < obs.length; j++) {
+            if (isColliding(obs[i], obs[j])) {
+                handleCollision(i, obs[i], j, obs[j]);
+            }
+        }
+    }
+}
+
+function sendObData() {
+    for (let i = 0; i < websockets.length; i++) {
+        websockets[i].send("OB DATA GOES HERE");
+    }
+}
+
 //Start the HTTP server (and websocket server)
 httpServer.listen(port);
