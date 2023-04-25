@@ -1,5 +1,6 @@
 const base = require("./ai/default");
 
 module.exports = {
-    base: base.main
+    base_main: base.main,
+    base_init: base.init
 }

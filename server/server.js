@@ -133,11 +133,28 @@ function collisionTick() {
             }
         }
     }
+    if (Math.random() < 0.01) {
+        //create a new globlin
+        obs.push({
+            name: "globlin", 
+            x: 0, 
+            y: 0, 
+            width: 200, 
+            height: 200, 
+            image: "globlin_a.png", 
+            halfWidth: 100, 
+            halfHeight: 100, 
+            halfImageWidth: 40, 
+            halfImageHeight: 40,
+            dx: 0,
+            dy: 0
+        });
+    }
 }
 
 function sendObData() {
     for (let i = 0; i < websockets.length; i++) {
-        websockets[i].send("OB DATA GOES HERE");
+        websockets[i].send(obs);
     }
 }
 
