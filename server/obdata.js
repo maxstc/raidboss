@@ -1,18 +1,12 @@
-const GLOBLIN_SINGLE = {
-    name: "globlin single",
-    width: 200,
-    height: 200,
-    sprite: "client/images/monster.png"
+const aipack = require("./aipack");
+
+const GLOBLIN_A = {
+    name: "globlin_a.png",
+    width: 100,
+    height: 100,
+    ai: aipack.globlin
 }
 
-const GLOBLIN_DOUBLE = {
-    
-}
-
-const GLOBLIN_TRIPLE = {
-
-}
-
-const GLOBLIN_QUADRUPLE = {
-
+module.exports = {
+    GLOBLIN_A: GLOBLIN_A
 }

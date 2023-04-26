@@ -99,13 +99,16 @@ wsServer.on("connection", (websocket) => {
 
 ////////// GAME LOGIC //////////
 
+//const main = require("./ai/main");
+const obdata = require("./obdata");
+
 let obs = [];
 
 function gameTick() {
-    //Do ai
+    //Do ai & move
     aiTick();
     //Move obs
-    moveTick();
+    // moveTick();
     //Handle ob collision
     collisionTick();
     //Send data to players
@@ -114,16 +117,18 @@ function gameTick() {
 
 function aiTick() {
     for (let i = 0; i < obs.length; i++) {
-        obs[i].aiFunc(obs[i]);
+        obs[i].obdata.ai.main(obs[i]);
     }
 }
 
-function moveTick() {
-    for (let i = 0; i < obs.length; i++) {
-        obs[i].x += obs[i].dx;
-        obs[i].y += obs[i].dy;
-    }
-}
+// function moveTick() {
+//     for (let i = 0; i < obs.length; i++) {
+//         obs[i].x += obs[i].dx;
+//         obs[i].y += obs[i].dy;
+//         obs[i].dx = 0;
+//         obs[i].dy = 0;
+//     }
+// }
 
 function collisionTick() {
     for (let i = 0; i < obs.length; i++) {
@@ -135,28 +140,38 @@ function collisionTick() {
     }
     if (Math.random() < 0.01) {
         //create a new globlin
+        console.log("new globlin");
         obs.push({
-            name: "globlin", 
             x: 0, 
-            y: 0, 
-            width: 200, 
-            height: 200, 
-            image: "globlin_a.png", 
-            halfWidth: 100, 
-            halfHeight: 100, 
-            halfImageWidth: 40, 
-            halfImageHeight: 40,
-            dx: 0,
-            dy: 0
+            y: 0,
+            obdata: obdata.GLOBLIN_A
         });
+        obdata.GLOBLIN_A.ai.init(obs[obs.length-1]);
     }
 }
 
+function isColliding() {
+    return false;
+}
+
 function sendObData() {
+    let clientObs = [];
+    for (let i = 0; i < obs.length; i++) {
+        clientObs.push({
+            name: obs[i].obdata.name,
+            x: obs[i].x,
+            y: obs[i].y,
+            width: obs[i].obdata.width,
+            height: obs[i].obdata.height,
+            imagesrc: obs[i].obdata.name,
+        });
+    }
     for (let i = 0; i < websockets.length; i++) {
-        websockets[i].send(obs);
+        websockets[i].send(JSON.stringify(clientObs));
     }
 }
+
+setInterval(gameTick, 100);
 
 //Start the HTTP server (and websocket server)
 httpServer.listen(port);
