@@ -7,6 +7,14 @@ const GLOBLIN_A = {
     ai: aipack.globlin
 }
 
+const PLAYER = {
+    name: "knight.png",
+    width: 100,
+    height: 100,
+    ai: aipack.player
+}
+
 module.exports = {
-    GLOBLIN_A: GLOBLIN_A
+    GLOBLIN_A: GLOBLIN_A,
+    PLAYER: PLAYER
 }

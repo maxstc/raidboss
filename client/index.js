@@ -17,6 +17,7 @@ let obs = [];
 let socket;
 
 let images = {};
+images["none"] = -1;
 
 function resizeCanvas() {
     canvas.setAttribute("width", window.innerWidth);
@@ -50,7 +51,7 @@ function render() {
     for (let i = 0; i < obs.length; i++) {
         let o = obs[i];
         if (images[o.imagesrc] === undefined) {
-            images[o.imagesrc] === 0;
+            images[o.imagesrc] = 0;
             let newImage = new Image();
             newImage.onload = () => {
                 images[o.imagesrc] = newImage;
@@ -60,6 +61,7 @@ function render() {
         
         if (images[o.imagesrc] === 0) {
             //its loading, just wait
+            console.log("IMAGE LOADING");
         }
         else {
             ctx.drawImage(
@@ -77,13 +79,18 @@ function render() {
 
         //todo put this if outside the for?
         if (debug) {
-            if (o.image === 0) {
+            console.log("DEBUG:" + o.imagesrc);
+            if (o.imagesrc === "none") {
                 ctx.strokeStyle = DEBUG_NO_IMAGE_RECT_COLOR;
                 ctx.strokeRect(o.x - 10 + midX, o.y - 10 + midY, 20, 20);
             }
-            else { 
+            else {
                 ctx.strokeStyle = DEBUG_IMAGE_RECT_COLOR;
-                ctx.strokeRect(o.x - images[o.imagesrc].width / 2 + midX, o.y - images[o.imagesrc].height / 2 + midY, [o.imagesrc].width, [o.imagesrc].height);
+                ctx.strokeRect(
+                    o.x - (images[o.imagesrc].width / 2) + midX, 
+                    o.y - images[o.imagesrc].height / 2 + midY, 
+                    images[o.imagesrc].width, 
+                    images[o.imagesrc].height);
             }
             ctx.strokeStyle = DEBUG_COLLISION_RECT_COLOR;
             ctx.strokeRect(o.x - o.width / 2 + midX, o.y - o.height / 2 + midY, o.width, o.height);

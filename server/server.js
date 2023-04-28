@@ -9,6 +9,8 @@ const http = require("http");
 const ws = require("ws");
 const fs = require("fs");
 
+const obdata = require("./obdata");
+
 ////////// HTTP SERVER //////////
 
 //To store data of static files to be served
@@ -85,9 +87,13 @@ wsServer.on("connection", (websocket) => {
     let id = websockets.length;
     websockets.push(websocket);
     console.log(id + " connected");
+    let playerOb = addPlayer();
     websocket.on("message", (data) => {
         let msg = data + "";
         console.log(id + ":" + msg);
+        if (msg === "a") {
+            playerOb.dx = 1;
+        }
     });
     websocket.on("close", () => {
         console.log(id + " closed");
@@ -98,9 +104,6 @@ wsServer.on("connection", (websocket) => {
 });
 
 ////////// GAME LOGIC //////////
-
-//const main = require("./ai/main");
-const obdata = require("./obdata");
 
 let obs = [];
 
@@ -152,6 +155,17 @@ function collisionTick() {
 
 function isColliding() {
     return false;
+}
+
+function addPlayer() {
+    let newPlayer = {
+        x: 0,
+        y: 0,
+        obdata: obdata.PLAYER
+    }
+    newPlayer.obdata.ai.init(newPlayer);
+    obs.push(newPlayer);
+    console.log("new player");
 }
 
 function sendObData() {
