@@ -92,6 +92,8 @@ wsServer.on("connection", (websocket) => {
         let msg = data + "";
         console.log(id + ":" + msg);
         if (msg === "a") {
+            console.log("OKAYOKAY");
+            console.log(playerOb);
             playerOb.dx = 1;
         }
     });
@@ -166,6 +168,7 @@ function addPlayer() {
     newPlayer.obdata.ai.init(newPlayer);
     obs.push(newPlayer);
     console.log("new player");
+    return newPlayer;
 }
 
 function sendObData() {

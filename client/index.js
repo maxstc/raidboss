@@ -26,6 +26,11 @@ function resizeCanvas() {
     midY = window.innerHeight / 2;
 }
 
+const KEY_LEFT = "KeyA";
+const KEY_RIGHT = "KeyD";
+const KEY_UP = "KeyW";
+const KEY_DOWN = "KeyS";
+
 window.onload = () => {
     canvas = document.getElementsByTagName("canvas")[0];
     ctx = canvas.getContext("2d");
@@ -34,8 +39,14 @@ window.onload = () => {
     socket = new WebSocket("ws://" + window.location.host);
 
     socket.onmessage = (event) => {
-        console.log(event.data);
         obs = JSON.parse(event.data);
+    }
+
+    window.onkeydown = (key) => {
+        console.log(key);
+        if (key.code == KEY_LEFT) {
+            socket.send("a");
+        }
     }
 }
 
@@ -61,7 +72,6 @@ function render() {
         
         if (images[o.imagesrc] === 0) {
             //its loading, just wait
-            console.log("IMAGE LOADING");
         }
         else {
             ctx.drawImage(
@@ -79,7 +89,6 @@ function render() {
 
         //todo put this if outside the for?
         if (debug) {
-            console.log("DEBUG:" + o.imagesrc);
             if (o.imagesrc === "none") {
                 ctx.strokeStyle = DEBUG_NO_IMAGE_RECT_COLOR;
                 ctx.strokeRect(o.x - 10 + midX, o.y - 10 + midY, 20, 20);
