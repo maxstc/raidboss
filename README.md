@@ -4,9 +4,6 @@
 # or run `node server/server.js <port>`
 
 # todo
-- add player
-- take client input
-- move player on client input
 - smooth camera follow player
 
 # backlog
