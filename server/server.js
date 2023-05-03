@@ -91,11 +91,32 @@ wsServer.on("connection", (websocket) => {
     websocket.on("message", (data) => {
         let msg = data + "";
         console.log(id + ":" + msg);
-        if (msg === "a") {
-            console.log("OKAYOKAY");
-            console.log(playerOb);
+        if (msg === "0") {
+            playerOb.dx = -1;
+        }
+        else if (msg === "1") {
             playerOb.dx = 1;
         }
+        else if (msg === "2") {
+            playerOb.dy = -1;
+        }
+        else if (msg === "3") {
+            playerOb.dy = 1;
+        }
+
+        else if (msg === "4" && playerOb.dx === -1) {
+            playerOb.dx = 0;
+        }
+        else if (msg === "5" && playerOb.dx === 1) {
+            playerOb.dx = 0;
+        }
+        else if (msg === "6" && playerOb.dy === -1) {
+            playerOb.dy = 0;
+        }
+        else if (msg === "7" && playerOb.dy === 1) {
+            playerOb.dy = 0;
+        }
+        
     });
     websocket.on("close", () => {
         console.log(id + " closed");

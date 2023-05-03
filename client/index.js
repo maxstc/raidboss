@@ -45,7 +45,32 @@ window.onload = () => {
     window.onkeydown = (key) => {
         console.log(key);
         if (key.code == KEY_LEFT) {
-            socket.send("a");
+            socket.send("0");
+        }
+        else if (key.code == KEY_RIGHT) {
+            socket.send("1");
+        }
+        else if (key.code == KEY_UP) {
+            socket.send("2");
+        }
+        else if (key.code == KEY_DOWN) {
+            socket.send("3");
+        }
+    }
+
+    window.onkeyup = (key) => {
+        console.log(key);
+        if (key.code == KEY_LEFT) {
+            socket.send("4");
+        }
+        else if (key.code == KEY_RIGHT) {
+            socket.send("5");
+        }
+        else if (key.code == KEY_UP) {
+            socket.send("6");
+        }
+        else if (key.code == KEY_DOWN) {
+            socket.send("7");
         }
     }
 }
