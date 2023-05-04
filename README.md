@@ -4,13 +4,13 @@
 # or run `node server/server.js <port>`
 
 # todo
+- change updates per second to a normal number
 - smooth camera follow player
+- ob stats
 
 # backlog
 - world boundaries
-- change updates per second to a normal number
 - make globlin ai better
-- ob stats
 - let clients attack obs
 - - target attack
 - - projectile attack
