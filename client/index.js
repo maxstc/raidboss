@@ -2,7 +2,8 @@ const DEBUG_IMAGE_RECT_COLOR = "green";
 const DEBUG_NO_IMAGE_RECT_COLOR = "gray";
 const DEBUG_COLLISION_RECT_COLOR = "red";
 
-let debug = true;
+let debug = false;
+//let debug = true;
 
 let canvas;
 let ctx;
@@ -125,15 +126,16 @@ function render() {
             );
         }
 
-        ctx.fillStyle = "black";
-        ctx.font = "20px Courier New";
-        ctx.fillText(
-            o.name, 
-            o.x - camX + midX - o.width / 2, 
-            o.y - camY + midY - o.height / 2 - 2);
-
         //todo put this if outside the for?
         if (debug) {
+
+            ctx.fillStyle = "black";
+            ctx.font = "20px Courier New";
+            ctx.fillText(
+                o.name, 
+                o.x - camX + midX - o.width / 2, 
+                o.y - camY + midY - o.height / 2 - 6);
+
             if (o.imagesrc === "none") {
                 ctx.strokeStyle = DEBUG_NO_IMAGE_RECT_COLOR;
                 ctx.strokeRect(

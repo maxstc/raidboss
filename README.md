@@ -4,10 +4,9 @@
 # or run `node server/server.js <port>`
 
 # todo
-- smooth camera follow player
+- world boundaries
 
 # backlog
-- world boundaries
 - make globlin ai better
 - let clients attack obs
 - - target attack
