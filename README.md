@@ -9,3 +9,4 @@
 # backlog
 - make globlin ai better
 - let clients attack obs and use stats
+- let clients pick a class
