@@ -4,7 +4,6 @@
 # or run `node server/server.js <port>`
 
 # todo
-- change updates per second to a normal number
 - smooth camera follow player
 - ob stats
 

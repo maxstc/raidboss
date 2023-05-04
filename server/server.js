@@ -11,6 +11,9 @@ const fs = require("fs");
 
 const obdata = require("./obdata");
 
+const MS_PER_UPDATE = 50;
+let last_update = 0;
+
 ////////// HTTP SERVER //////////
 
 //To store data of static files to be served
@@ -209,7 +212,14 @@ function sendObData() {
     }
 }
 
-setInterval(gameTick, 100);
+last_update = Date.now();
+setInterval(() => {
+    let cur_time = Date.now();
+    for (let i = 0; i < (cur_time - last_update) / MS_PER_UPDATE; i++) {
+        last_update = cur_time;
+        gameTick();
+    }
+}, 10);
 
 //Start the HTTP server (and websocket server)
 httpServer.listen(port);
