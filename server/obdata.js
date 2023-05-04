@@ -1,5 +1,12 @@
 const aipack = require("./aipack");
 
+const DOG = {
+    name: "dog_pixel.png",
+    width: 80,
+    height: 80,
+    ai: aipack.base
+}
+
 const GLOBLIN_A = {
     name: "globlin_a.png",
     width: 100,
@@ -15,6 +22,7 @@ const PLAYER = {
 }
 
 module.exports = {
+    DOG: DOG,
     GLOBLIN_A: GLOBLIN_A,
     PLAYER: PLAYER
 }

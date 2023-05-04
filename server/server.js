@@ -88,9 +88,10 @@ let websockets = [];
 //Websocket server
 wsServer.on("connection", (websocket) => {
     let id = websockets.length;
+    websocket.send(id);
     websockets.push(websocket);
     console.log(id + " connected");
-    let playerOb = addPlayer();
+    let playerOb = addPlayer(id);
     websocket.on("message", (data) => {
         let msg = data + "";
         console.log(id + ":" + msg);
@@ -150,15 +151,6 @@ function aiTick() {
     }
 }
 
-// function moveTick() {
-//     for (let i = 0; i < obs.length; i++) {
-//         obs[i].x += obs[i].dx;
-//         obs[i].y += obs[i].dy;
-//         obs[i].dx = 0;
-//         obs[i].dy = 0;
-//     }
-// }
-
 function collisionTick() {
     for (let i = 0; i < obs.length; i++) {
         for (let j = i + 1; j < obs.length; j++) {
@@ -183,10 +175,11 @@ function isColliding() {
     return false;
 }
 
-function addPlayer() {
+function addPlayer(playerId) {
     let newPlayer = {
         x: 0,
         y: 0,
+        playerId: playerId,
         obdata: obdata.PLAYER
     }
     newPlayer.obdata.ai.init(newPlayer);
@@ -205,12 +198,20 @@ function sendObData() {
             width: obs[i].obdata.width,
             height: obs[i].obdata.height,
             imagesrc: obs[i].obdata.name,
+            playerId: obs[i].playerId
         });
     }
     for (let i = 0; i < websockets.length; i++) {
         websockets[i].send(JSON.stringify(clientObs));
     }
 }
+
+obs.push({
+    x: 0, 
+    y: 0,
+    obdata: obdata.DOG
+});
+obdata.DOG.ai.init(obs[obs.length-1]);
 
 last_update = Date.now();
 setInterval(() => {

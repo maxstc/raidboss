@@ -5,7 +5,6 @@
 
 # todo
 - smooth camera follow player
-- ob stats
 
 # backlog
 - world boundaries

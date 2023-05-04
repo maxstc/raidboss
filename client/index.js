@@ -15,6 +15,8 @@ let midY = 0;
 let focusedOb = null;
 let obs = [];
 let socket;
+let targetOb = 0;
+let playerId = -1;
 
 let images = {};
 images["none"] = -1;
@@ -39,7 +41,17 @@ window.onload = () => {
     socket = new WebSocket("ws://" + window.location.host);
 
     socket.onmessage = (event) => {
-        obs = JSON.parse(event.data);
+        if (playerId === -1) {
+            playerId = JSON.parse(event.data);
+        }
+        else {
+            obs = JSON.parse(event.data);
+            for (let i = 0; i < obs.length; i++) {
+                if (obs[i].playerId === playerId) {
+                    targetOb = obs[i];
+                }
+            }
+        }
     }
 
     window.onkeydown = (key) => {
@@ -82,6 +94,11 @@ window.onresize = () => {
 setInterval(render, 50);
 
 function render() {
+    if (targetOb != 0) {
+        camX += 0.1 * (targetOb.x - camX);
+        camY += 0.1 * (targetOb.y - camY);
+    }
+
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     for (let i = 0; i < obs.length; i++) {
@@ -110,24 +127,35 @@ function render() {
 
         ctx.fillStyle = "black";
         ctx.font = "20px Courier New";
-        ctx.fillText(o.name, o.x + midX - o.width / 2, o.y + midY - o.height / 2 - 2);
+        ctx.fillText(
+            o.name, 
+            o.x - camX + midX - o.width / 2, 
+            o.y - camY + midY - o.height / 2 - 2);
 
         //todo put this if outside the for?
         if (debug) {
             if (o.imagesrc === "none") {
                 ctx.strokeStyle = DEBUG_NO_IMAGE_RECT_COLOR;
-                ctx.strokeRect(o.x - 10 + midX, o.y - 10 + midY, 20, 20);
+                ctx.strokeRect(
+                    o.x - camX - 10 + midX, 
+                    o.y - camY - 10 + midY, 
+                    20, 
+                    20);
             }
             else {
                 ctx.strokeStyle = DEBUG_IMAGE_RECT_COLOR;
                 ctx.strokeRect(
-                    o.x - (images[o.imagesrc].width / 2) + midX, 
-                    o.y - images[o.imagesrc].height / 2 + midY, 
+                    o.x - camX - (images[o.imagesrc].width / 2) + midX, 
+                    o.y - camY - (images[o.imagesrc].height / 2) + midY, 
                     images[o.imagesrc].width, 
                     images[o.imagesrc].height);
             }
             ctx.strokeStyle = DEBUG_COLLISION_RECT_COLOR;
-            ctx.strokeRect(o.x - o.width / 2 + midX, o.y - o.height / 2 + midY, o.width, o.height);
+            ctx.strokeRect(
+                o.x - camX - o.width / 2 + midX, 
+                o.y - camY - o.height / 2 + midY, 
+                o.width, 
+                o.height);
         }
     }
 }
