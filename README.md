@@ -8,8 +8,4 @@
 
 # backlog
 - make globlin ai better
-- let clients attack obs
-- - target attack
-- - projectile attack
-- - splash attack
-- - sustained splash attack
+- let clients attack obs and use stats
