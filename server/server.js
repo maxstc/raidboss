@@ -181,7 +181,6 @@ function between(a, b, c) {
 
 //TODO
 //This function can be made more efficient
-//ALSO: we dont detect the collision if ob2 is inside ob1.. sorry :D
 function collision(ob1, ob2) {
     //0
     let leftDist = ob2.right - ob1.left;
@@ -192,15 +191,12 @@ function collision(ob1, ob2) {
     //3
     let bottomDist = ob1.bottom - ob2.top;
 
-    console.log(`${leftDist}\t${rightDist}\t${topDist}\t${bottomDist}`);
-
     if (leftDist < 0 || rightDist < 0 || topDist < 0 || bottomDist < 0) {
         //no collision
     }
     else {
         handleCollision(ob1, ob2);
-
-        if (ob1.isWall != ob2.isWall) {
+        if (ob1.obdata.isWall != ob2.obdata.isWall) {
             let minDistIndex = 0;
             let minDistValue = leftDist;
 
@@ -216,13 +212,48 @@ function collision(ob1, ob2) {
                 minDistIndex = 3;
                 minDistValue = bottomDist;
             }
-        }
 
+            if (ob1.obdata.isWall) {
+                //move ob2 direction of index
+                switch(minDistIndex) {
+                    case 0:
+                        ob2.x -= minDistValue;
+                    break;
+                    case 1:
+                        ob2.x += minDistValue;
+                    break;
+                    case 2:
+                        ob2.y -= minDistValue;
+                    break;
+                    case 3:
+                        ob2.y += minDistValue;
+                    break;
+                }
+            }
+            else {
+                //move ob1 opposite direction of index
+                switch(minDistIndex) {
+                    case 0:
+                        ob1.x += minDistValue;
+                    break;
+                    case 1:
+                        ob1.x -= minDistValue;
+                    break;
+                    case 2:
+                        ob1.y += minDistValue;
+                    break;
+                    case 3:
+                        ob1.y -= minDistValue;
+                    break;
+                }
+            }
+
+        }
     }
 }
 
 function handleCollision(ob1, ob2) {
-    console.log("COLLISION");
+    //run collision handler functions of ob1 and ob2
 }
 
 function addPlayer(playerId) {
