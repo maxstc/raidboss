@@ -4,9 +4,9 @@
 # or run `node server/server.js <port>`
 
 # todo
-- world boundaries
+- build a level
+- make globlin ai better
 
 # backlog
-- make globlin ai better
 - let clients attack obs and use stats
 - let clients pick a class
