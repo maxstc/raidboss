@@ -2,8 +2,8 @@ const DEBUG_IMAGE_RECT_COLOR = "green";
 const DEBUG_NO_IMAGE_RECT_COLOR = "gray";
 const DEBUG_COLLISION_RECT_COLOR = "red";
 
-let debug = false;
-//let debug = true;
+//let debug = false;
+let debug = true;
 
 let canvas;
 let ctx;

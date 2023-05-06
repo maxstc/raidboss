@@ -153,26 +153,76 @@ function aiTick() {
 
 function collisionTick() {
     for (let i = 0; i < obs.length; i++) {
+        obs[i].left = obs[i].x - obs[i].obdata.width / 2;
+        obs[i].right = obs[i].x + obs[i].obdata.width / 2;
+        obs[i].top = obs[i].y - obs[i].obdata.height / 2;
+        obs[i].bottom = obs[i].y + obs[i].obdata.height / 2;
+    }
+    for (let i = 0; i < obs.length; i++) {
         for (let j = i + 1; j < obs.length; j++) {
-            if (isColliding(obs[i], obs[j])) {
-                handleCollision(i, obs[i], j, obs[j]);
-            }
+            collision(obs[i], obs[j]);
         }
     }
-    if (Math.random() < 0.01) {
-        //create a new globlin
-        console.log("new globlin");
-        obs.push({
-            x: 0, 
-            y: 0,
-            obdata: obdata.GLOBLIN_A
-        });
-        obdata.GLOBLIN_A.ai.init(obs[obs.length-1]);
+    // if (Math.random() < 0.01) {
+    //     //create a new globlin
+    //     console.log("new globlin");
+    //     obs.push({
+    //         x: 0, 
+    //         y: 0,
+    //         obdata: obdata.GLOBLIN_A
+    //     });
+    //     obdata.GLOBLIN_A.ai.init(obs[obs.length-1]);
+    // }
+}
+
+function between(a, b, c) {
+    return a >= b && a <= c;
+}
+
+//TODO
+//This function can be made more efficient
+//ALSO: we dont detect the collision if ob2 is inside ob1.. sorry :D
+function collision(ob1, ob2) {
+    //0
+    let leftDist = ob2.right - ob1.left;
+    //1
+    let rightDist = ob1.right - ob2.left;
+    //2
+    let topDist = ob2.bottom - ob1.top;
+    //3
+    let bottomDist = ob1.bottom - ob2.top;
+
+    console.log(`${leftDist}\t${rightDist}\t${topDist}\t${bottomDist}`);
+
+    if (leftDist < 0 || rightDist < 0 || topDist < 0 || bottomDist < 0) {
+        //no collision
+    }
+    else {
+        handleCollision(ob1, ob2);
+
+        if (ob1.isWall != ob2.isWall) {
+            let minDistIndex = 0;
+            let minDistValue = leftDist;
+
+            if (rightDist < minDistValue) {
+                minDistIndex = 1;
+                minDistValue = rightDist;
+            }
+            if (topDist < minDistValue) {
+                minDistIndex = 2;
+                minDistValue = topDist;
+            }
+            if (bottomDist < minDistValue) {
+                minDistIndex = 3;
+                minDistValue = bottomDist;
+            }
+        }
+
     }
 }
 
-function isColliding() {
-    return false;
+function handleCollision(ob1, ob2) {
+    console.log("COLLISION");
 }
 
 function addPlayer(playerId) {
