@@ -9,7 +9,8 @@ module.exports = {
             health: 10,
             defense: 10,
             attackSpeed: 3,
-            moveSpeed: 3
+            moveSpeed: 3,
+            damageTaken: 0
         }
         ob.dx = 0;
         ob.dy = 0;

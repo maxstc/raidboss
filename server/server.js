@@ -94,7 +94,6 @@ wsServer.on("connection", (websocket) => {
     let playerOb = addPlayer(id);
     websocket.on("message", (data) => {
         let msg = data + "";
-        console.log(id + ":" + msg);
         if (msg === "0") {
             playerOb.dx = -1;
         }

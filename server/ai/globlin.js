@@ -12,7 +12,8 @@ module.exports = {
             health: 10,
             defense: 10,
             attackSpeed: 3,
-            moveSpeed: 2
+            moveSpeed: 2,
+            damageTaken: 0
         }
         ob.direction = Math.random() * 360;
     }
