@@ -4,6 +4,7 @@
 # or run `node server/server.js <port>`
 
 # todo
+- background images
 - build a level
 - make globlin ai better
 
