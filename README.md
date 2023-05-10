@@ -5,6 +5,7 @@
 
 # todo
 - make globlin ai better
+- fix against the wall collision issue
 
 # backlog
 - let clients attack obs and use stats
