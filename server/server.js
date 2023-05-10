@@ -286,12 +286,32 @@ function sendObData() {
     }
 }
 
-obs.push({
-    x: 0, 
-    y: 0,
-    obdata: obdata.DOG
-});
-obdata.DOG.ai.init(obs[obs.length-1]);
+// obs.push({
+//     x: 0, 
+//     y: 0,
+//     obdata: obdata.DOG
+// });
+// obdata.DOG.ai.init(obs[obs.length-1]);
+
+//add boundaries
+for (let x = -10; x <= 10; x++) {
+    for (let y = -10; y < 10; y++) {
+        if (x === -10 || x === 10 || y === -10 || y === 10) {
+            obs.push({
+                x: x * 160,
+                y: y * 160,
+                obdata: obdata.WALL
+            });
+        }
+        else {
+            obs.push({
+                x: x * 160,
+                y: y * 160,
+                obdata: obdata.FLOOR
+            });
+        }
+    }
+}
 
 last_update = Date.now();
 setInterval(() => {

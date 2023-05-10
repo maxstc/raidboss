@@ -43,5 +43,7 @@ const WALL = {
 module.exports = {
     DOG: DOG,
     GLOBLIN_A: GLOBLIN_A,
-    PLAYER: PLAYER
+    PLAYER: PLAYER,
+    FLOOR: FLOOR,
+    WALL: WALL
 }
