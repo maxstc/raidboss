@@ -162,16 +162,16 @@ function collisionTick() {
             collision(obs[i], obs[j]);
         }
     }
-    // if (Math.random() < 0.01) {
-    //     //create a new globlin
-    //     console.log("new globlin");
-    //     obs.push({
-    //         x: 0, 
-    //         y: 0,
-    //         obdata: obdata.GLOBLIN_A
-    //     });
-    //     obdata.GLOBLIN_A.ai.init(obs[obs.length-1]);
-    // }
+    if (Math.random() < 0.01) {
+        //create a new globlin
+        console.log("new globlin");
+        obs.push({
+            x: 0, 
+            y: 0,
+            obdata: obdata.GLOBLIN_A
+        });
+        obdata.GLOBLIN_A.ai.init(obs[obs.length-1]);
+    }
 }
 
 function between(a, b, c) {
@@ -216,16 +216,16 @@ function collision(ob1, ob2) {
                 //move ob2 direction of index
                 switch(minDistIndex) {
                     case 0:
-                        ob2.x -= minDistValue;
+                        ob2.x -= 0.1 * minDistValue;
                     break;
                     case 1:
-                        ob2.x += minDistValue;
+                        ob2.x += 0.1 * minDistValue;
                     break;
                     case 2:
-                        ob2.y -= minDistValue;
+                        ob2.y -= 0.1 * minDistValue;
                     break;
                     case 3:
-                        ob2.y += minDistValue;
+                        ob2.y += 0.1 * minDistValue;
                     break;
                 }
             }

@@ -6,6 +6,8 @@
 # todo
 - make globlin ai better
 - fix against the wall collision issue
+    - separate collision from visuals
+    - in level design, dont have adjacent collision boxes
 
 # backlog
 - let clients attack obs and use stats
