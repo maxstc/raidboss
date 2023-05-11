@@ -5,12 +5,12 @@
 
 # todo
 - make globlin ai better
-- fix against the wall collision issue
-    - separate collision from visuals
-    - in level design, dont have adjacent collision boxes
+- improve performance
 
 # backlog
 - let clients attack obs and use stats
 - let clients pick a class
-- improve level editability
-- improve performance
+- make the level better
+
+# note to self
+- adjacent hitboxes can create issues. have all map objects and walls ignore collisions, then create invisible (potentially overlapping) collision boxes.
