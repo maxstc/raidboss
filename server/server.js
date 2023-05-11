@@ -181,6 +181,9 @@ function between(a, b, c) {
 //TODO
 //This function can be made more efficient
 function collision(ob1, ob2) {
+    if (ob1.obdata.collisionType === obdata.COLLISION_IGNORE || ob2.obdata.collisionType === obdata.COLLISION_IGNORE) {
+        return;
+    }
     //0
     let leftDist = ob2.right - ob1.left;
     //1
@@ -195,7 +198,11 @@ function collision(ob1, ob2) {
     }
     else {
         handleCollision(ob1, ob2);
-        if (ob1.obdata.isWall != ob2.obdata.isWall) {
+        if (
+            (ob1.obdata.collisionType === obdata.COLLISION_OB && ob2.obdata.collisionType === obdata.COLLISION_WALL)
+            ||
+            (ob2.obdata.collisionType === obdata.COLLISION_OB && ob1.obdata.collisionType === obdata.COLLISION_WALL)
+            ) {
             let minDistIndex = 0;
             let minDistValue = leftDist;
 
@@ -212,20 +219,20 @@ function collision(ob1, ob2) {
                 minDistValue = bottomDist;
             }
 
-            if (ob1.obdata.isWall) {
+            if (ob1.obdata.collisionType === obdata.COLLISION_WALL) {
                 //move ob2 direction of index
                 switch(minDistIndex) {
                     case 0:
-                        ob2.x -= 0.1 * minDistValue;
+                        ob2.x -= minDistValue;
                     break;
                     case 1:
-                        ob2.x += 0.1 * minDistValue;
+                        ob2.x += minDistValue;
                     break;
                     case 2:
-                        ob2.y -= 0.1 * minDistValue;
+                        ob2.y -= minDistValue;
                     break;
                     case 3:
-                        ob2.y += 0.1 * minDistValue;
+                        ob2.y += minDistValue;
                     break;
                 }
             }
@@ -295,7 +302,7 @@ function sendObData() {
 
 //add boundaries
 for (let x = -10; x <= 10; x++) {
-    for (let y = -10; y < 10; y++) {
+    for (let y = -10; y <= 10; y++) {
         if (x === -10 || x === 10 || y === -10 || y === 10) {
             obs.push({
                 x: x * 160,
@@ -312,6 +319,11 @@ for (let x = -10; x <= 10; x++) {
         }
     }
 }
+obs.push(obdata.createWall(0, 160*10, 3200, 160));
+obs.push(obdata.createWall(0, -160*10, 3200, 160));
+obs.push(obdata.createWall(160*10, 0, 160, 3200));
+obs.push(obdata.createWall(-160*10, 0, 160, 3200));
+
 
 last_update = Date.now();
 setInterval(() => {
