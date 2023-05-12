@@ -1,6 +1,6 @@
 module.exports = {
     main: function(ob) {
-        if (Math.random < 0.05) {
+        if (Math.random() < 0.05) {
             ob.direction = Math.random() * 360;
         }
         ob.y += Math.sin(ob.direction) * ob.stats.moveSpeed;

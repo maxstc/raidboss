@@ -324,7 +324,6 @@ obs.push(obdata.createWall(0, -160*10, 3200, 160));
 obs.push(obdata.createWall(160*10, 0, 160, 3200));
 obs.push(obdata.createWall(-160*10, 0, 160, 3200));
 
-
 last_update = Date.now();
 setInterval(() => {
     let cur_time = Date.now();
