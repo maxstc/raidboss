@@ -5,12 +5,12 @@
 
 # todo
 - make globlin ai better
-- improve performance
+- let clients attack obs and use stats
 
 # backlog
-- let clients attack obs and use stats
 - let clients pick a class
 - make the level better
+- improve performance
 
 # note to self
 - adjacent hitboxes can create issues. have all map objects and walls ignore collisions, then create invisible (potentially overlapping) collision boxes.
