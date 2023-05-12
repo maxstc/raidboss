@@ -21,7 +21,13 @@ const GLOBLIN_A = {
     width: 100,
     height: 100,
     ai: aipack.globlin,
-    collisionType: COLLISION_OB
+    collisionType: COLLISION_OB,
+    base_power: 0,
+    base_defense: 20,
+    base_health: 100,
+    base_attack_speed: 0,
+    base_movement_speed: 2,
+    base_piercing: 0
 }
 
 const PLAYER = {
