@@ -2,8 +2,8 @@ const DEBUG_IMAGE_RECT_COLOR = "green";
 const DEBUG_NO_IMAGE_RECT_COLOR = "gray";
 const DEBUG_COLLISION_RECT_COLOR = "red";
 
-let debug = false;
-//let debug = true;
+//let debug = false;
+let debug = true;
 
 let canvas;
 let ctx;
@@ -18,6 +18,8 @@ let obs = [];
 let socket;
 let targetOb = 0;
 let playerId = -1;
+let mouseX = 0;
+let mouseY = 0;
 
 let images = {};
 images["none"] = -1;
@@ -85,6 +87,12 @@ window.onload = () => {
         else if (key.code == KEY_DOWN) {
             socket.send("7");
         }
+    }
+
+    window.onmousemove = (mouse) => {
+        mouseX = mouse.offsetX;
+        mouseY = mouse.offsetY;
+        console.log(`${mouseX} ${mouseY}`);
     }
 }
 
