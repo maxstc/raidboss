@@ -20,6 +20,7 @@ let targetOb = 0;
 let playerId = -1;
 let mouseX = 0;
 let mouseY = 0;
+let hoveredOb = null;
 
 let images = {};
 images["none"] = -1;

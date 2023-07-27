@@ -180,6 +180,11 @@ function between(a, b, c) {
 
 //TODO
 //This function can be made more efficient
+//Potential fix to the issue that required that i have the one big wall thing:
+//On collision, when we find a potential translation that would make no collision with that object, do a collision check with that object's new potential position.
+//then, if there is still a collision, then try another potential translation.
+//if all potential translations have been tried, give up and hope another object will work.
+//mark the object and have it die if it doesnt fix it by the end of the collision checks? (idk)
 function collision(ob1, ob2) {
     if (ob1.obdata.collisionType === obdata.COLLISION_IGNORE || ob2.obdata.collisionType === obdata.COLLISION_IGNORE) {
         return;
