@@ -4,13 +4,13 @@
 # or run `node server/server.js <port>`
 
 # todo
-- make globlin ai better
 - let clients attack obs and use stats
 
 # backlog
-- let clients pick a class
-- make the level better
-- improve performance
+- classes
+- design level
+- improve globlin ai
 
 # note to self
 - adjacent hitboxes can create issues. have all map objects and walls ignore collisions, then create invisible (potentially overlapping) collision boxes.
+- can be fixed by checking collisions after moving and finding a translation that resolve *all* translations
