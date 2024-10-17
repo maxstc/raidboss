@@ -101,7 +101,7 @@ window.onresize = () => {
     resizeCanvas();
 }
 
-setInterval(render, 50);
+setInterval(render, 20);
 
 function render() {
     if (targetOb != 0) {
