@@ -59,41 +59,46 @@ window.onload = () => {
     }
 
     window.onkeydown = (key) => {
-        console.log(key);
         if (key.code == KEY_LEFT) {
-            socket.send("0");
+            socket.send(JSON.stringify({inputType:"move", value:"left"}));
         }
         else if (key.code == KEY_RIGHT) {
-            socket.send("1");
+            socket.send(JSON.stringify({inputType:"move", value:"right"}));
         }
         else if (key.code == KEY_UP) {
-            socket.send("2");
+            socket.send(JSON.stringify({inputType:"move", value:"up"}));
         }
         else if (key.code == KEY_DOWN) {
-            socket.send("3");
+            socket.send(JSON.stringify({inputType:"move", value:"down"}));
         }
     }
 
     window.onkeyup = (key) => {
-        console.log(key);
         if (key.code == KEY_LEFT) {
-            socket.send("4");
+            socket.send(JSON.stringify({inputType:"stopMove", value:"left"}));
         }
         else if (key.code == KEY_RIGHT) {
-            socket.send("5");
+            socket.send(JSON.stringify({inputType:"stopMove", value:"right"}));
         }
         else if (key.code == KEY_UP) {
-            socket.send("6");
+            socket.send(JSON.stringify({inputType:"stopMove", value:"up"}));
         }
         else if (key.code == KEY_DOWN) {
-            socket.send("7");
+            socket.send(JSON.stringify({inputType:"stopMove", value:"down"}));
         }
     }
 
     window.onmousemove = (mouse) => {
         mouseX = mouse.offsetX;
         mouseY = mouse.offsetY;
-        console.log(`${mouseX} ${mouseY}`);
+    }
+
+    window.onmousedown = (mouse) => {
+        socket.send(JSON.stringify({inputType:"attack", value:{x: mouse.offsetX, y: mouse.offsetY}}));
+    }
+
+    window.onmousedown = (mouse) => {
+        socket.send(JSON.stringify({inputType:"stopAttack", value:{x: mouse.offsetX, y: mouse.offsetY}}));
     }
 }
 
