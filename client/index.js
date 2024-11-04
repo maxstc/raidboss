@@ -2,8 +2,7 @@ const DEBUG_IMAGE_RECT_COLOR = "green";
 const DEBUG_NO_IMAGE_RECT_COLOR = "gray";
 const DEBUG_COLLISION_RECT_COLOR = "red";
 
-//let debug = false;
-let debug = true;
+let debug = false;
 
 let canvas;
 let ctx;
@@ -138,6 +137,18 @@ function render() {
                 images[o.imagesrc].width,
                 images[o.imagesrc].height
             );
+        }
+
+        if (playerId === obs[i].playerId) {
+            //calculate mouse angle
+            let xDiff = mouseX - midX + camX - obs[i].x;
+            let yDiff = mouseY - midY + camY - obs[i].y;
+            let targetDist = 60;
+            let scale = targetDist / Math.sqrt(xDiff * xDiff + yDiff * yDiff);
+            ctx.strokeStyle = "red";
+            ctx.beginPath();
+            ctx.arc((obs[i].x + xDiff * scale) - camX + midX, (obs[i].y + yDiff * scale) - camY + midY, 20, 0, 2 * Math.PI);
+            ctx.stroke();
         }
 
         //todo put this if outside the for?
