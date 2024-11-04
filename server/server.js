@@ -142,8 +142,8 @@ wsServer.on("connection", (websocket) => {
 let obs = [];
 
 function gameTick() {
-    //Do ai & move
-    aiTick();
+    //Do script & move
+    scriptTick();
     //Move obs
     // moveTick();
     //Handle ob collision
@@ -152,9 +152,9 @@ function gameTick() {
     sendObData();
 }
 
-function aiTick() {
+function scriptTick() {
     for (let i = 0; i < obs.length; i++) {
-        obs[i].obdata.ai.main(obs[i]);
+        obs[i].obdata.script.main(obs[i]);
     }
 }
 
@@ -178,7 +178,7 @@ function collisionTick() {
             y: 0,
             obdata: obdata.GLOBLIN_A
         });
-        obdata.GLOBLIN_A.ai.init(obs[obs.length-1]);
+        obdata.GLOBLIN_A.script.init(obs[obs.length-1]);
     }
 }
 
@@ -282,7 +282,7 @@ function addPlayer(playerId) {
         playerId: playerId,
         obdata: obdata.PLAYER
     }
-    newPlayer.obdata.ai.init(newPlayer);
+    newPlayer.obdata.script.init(newPlayer);
     obs.push(newPlayer);
     console.log("new player");
     return newPlayer;
@@ -305,13 +305,6 @@ function sendObData() {
         websockets[i].send(JSON.stringify(clientObs));
     }
 }
-
-// obs.push({
-//     x: 0, 
-//     y: 0,
-//     obdata: obdata.DOG
-// });
-// obdata.DOG.ai.init(obs[obs.length-1]);
 
 //add boundaries
 for (let x = -10; x <= 10; x++) {
