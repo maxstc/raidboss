@@ -5,5 +5,6 @@ const player = require("./script/player");
 module.exports = {
     base: base,
     globlin: globlin,
-    player: player
+    player: player,
+    damageArea: damageArea
 }

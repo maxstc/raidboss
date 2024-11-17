@@ -1,8 +1,8 @@
 module.exports = {
-    main: function(ob) {
+    main: function(ob, obs) {
         //console.log(ob.name + "needs an AI method!");
     },
-    init: function(ob) {
+    init: function(ob, obs) {
         console.log(`${ob.name} default ai!`);
     }
 }
